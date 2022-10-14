@@ -1,14 +1,14 @@
 import { Router } from 'express';
 
 import { signupUser } from '../controllers/usersControllers.js';
-import { validateUser } from '../middlewares/usersMiddlewares.js';
+import { validateUser, checkUser } from '../middlewares/usersMiddlewares.js';
 
 const usersRouter = Router();
 
 
 
-usersRouter.post('/signup', validateUser);
-usersRouter.post('/signin', validateUser);
+usersRouter.post('/signup', validateUser, checkUser);
+usersRouter.post('/signin', validateUser, checkUser);
 
 
 

@@ -16,10 +16,45 @@ function validateUser(req,res, next) {
         return res.status(422).send(validation.error.details.map((item)=>item.message));
     }
 
+    if(user.confirmPassword && user.confirmPassword !== user.password) {
+        console.log('passwords do not match!');
+        return res.status(422).send('passwords do not match!');
+    }
+
     res.locals.user = {
         ...user
     };
     next();
 }
 
-export { validateUser };
+function checkUser(req,res, next) {
+    
+    const { email, password } = res.locals.user;
+    const confirmPassword = res.locals.user?.confirmPassword;
+
+    console.log(email, password, confirmPassword)
+
+
+
+
+
+
+
+
+
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+export { validateUser, checkUser };
