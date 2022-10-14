@@ -7,7 +7,7 @@ CREATE TABLE "users" (
 	"name" TEXT NOT NULL UNIQUE,
 	"email" TEXT NOT NULL UNIQUE,
 	"password" TEXT NOT NULL,
-	"created_at" TIMESTAMP NOT NULL,
+	"created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -20,7 +20,7 @@ CREATE TABLE "links" (
 	"user_id" integer NOT NULL,
 	"full_url" TEXT NOT NULL,
 	"short_url" TEXT NOT NULL UNIQUE,
-	"created_at" TIMESTAMP NOT NULL,
+	"created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
 	CONSTRAINT "links_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -32,7 +32,7 @@ CREATE TABLE "sessions" (
 	"id" serial NOT NULL,
 	"user_id" integer NOT NULL,
 	"token" TEXT NOT NULL UNIQUE,
-	"created_at" TIMESTAMP NOT NULL,
+	"created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
 	CONSTRAINT "sessions_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -43,7 +43,7 @@ CREATE TABLE "sessions" (
 CREATE TABLE "visits" (
 	"id" serial NOT NULL,
 	"link_id" integer NOT NULL,
-	"created_at" TIMESTAMP NOT NULL,
+	"created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
 	CONSTRAINT "visits_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
