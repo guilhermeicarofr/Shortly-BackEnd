@@ -1,5 +1,6 @@
 {
   "name": "shortly",
+  "type": "module",
   "version": "1.0.0",
   "description": "an application to shorten and distribute your links ",
   "main": "index.js",
