@@ -28,7 +28,7 @@ async function signinUser(req,res) {
         const session = await db.query('INSERT INTO sessions (user_id) VALUES ($1) RETURNING sessions.id;', [ id ]);
         
         const token = jwt.sign({ session_id: session.rows[0].id }, key, { expiresIn: 60*60*24 });
-        res.status(200).send(token);
+        res.status(200).send({ token: token });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
