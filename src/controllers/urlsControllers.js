@@ -20,7 +20,7 @@ async function createShortUrl(req,res) {
 }
 
 async function findOneUrl(req,res) {
-    
+
     const id = req.params?.id;
 
     try {
@@ -41,4 +41,28 @@ async function findOneUrl(req,res) {
     }
 }
 
-export { createShortUrl, findOneUrl };
+async function useShortUrl(req,res) {
+
+    const shortUrl = req.params?.shortUrl;
+
+    try {
+        const link = await db.query(`SELECT links.id, links.full_url AS "url"
+                                    FROM links
+                                    WHERE links.short_url=$1
+                                    LIMIT 1;`, [ shortUrl ]);
+
+        if(!link.rows[0]) {
+            console.log('link not found');
+            res.status(404).send('link not found');
+        }
+
+        await db.query('INSERT INTO visits (link_id) VALUES ($1);', [link.rows[0].id]);
+
+        res.redirect(link.rows[0].url);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+}
+
+export { createShortUrl, findOneUrl, useShortUrl };
