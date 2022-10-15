@@ -31,7 +31,6 @@ CREATE TABLE "links" (
 CREATE TABLE "sessions" (
 	"id" serial NOT NULL,
 	"user_id" integer NOT NULL,
-	"token" TEXT NOT NULL UNIQUE,
 	"created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
 	CONSTRAINT "sessions_pk" PRIMARY KEY ("id")
 ) WITH (

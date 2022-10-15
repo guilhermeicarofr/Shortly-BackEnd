@@ -3,8 +3,6 @@ import bcrypt from 'bcrypt';
 import { signupSchema, signinSchema } from '../schemas/usersShchemas.js';
 import { db } from '../databases/database.js';
 
-
-
 function validateUser(req,res,next) {
     
     const user = req.body;
@@ -21,7 +19,7 @@ function validateUser(req,res,next) {
     }
 
     if(user.confirmPassword && user.confirmPassword !== user.password) {
-        console.log('passwords do not match!');
+        console.log('passwords do not match');
         return res.status(422).send('passwords do not match');
     }
 
@@ -30,8 +28,6 @@ function validateUser(req,res,next) {
     };
     next();
 }
-
-
 
  async function checkUserData(req,res,next) {
     
