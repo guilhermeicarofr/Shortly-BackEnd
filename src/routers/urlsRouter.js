@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { validateAuthToken } from '../middlewares/tokenAuthenticationMiddlewares.js';
-import { validateSchema } from '../middlewares/schemaValidationMiddleware.js';
+import { validateSchema } from '../middlewares/schemaValidationMiddlewares.js';
 import { urlSchema } from '../schemas/urlsSchemas.js';
 import { createShortUrl } from '../controllers/urlsControllers.js';
 
