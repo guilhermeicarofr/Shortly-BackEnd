@@ -31,7 +31,7 @@ async function findOneUrl(req,res) {
         
         if(!link.rows[0]) {
             console.log('link not found');
-            res.status(404).send('link not found');
+            return res.status(404).send('link not found');
         }
 
         res.status(200).send(link.rows[0]);
@@ -65,4 +65,31 @@ async function useShortUrl(req,res) {
     }
 }
 
-export { createShortUrl, findOneUrl, useShortUrl };
+async function deleteOneUrl(req,res) {
+
+    const { user } = res.locals;
+    const id = req.params?.id;
+
+    try {
+        const link = await db.query(`SELECT links.id, links.user_id AS "userId"
+                                    FROM links
+                                    WHERE links.id=$1
+                                    LIMIT 1;`, [ id ]);
+
+        if(!link.rows[0]) {
+            console.log('link not found');
+            return res.status(404).send('link not found');
+        } else if (link.rows[0].userId !== user.id) {
+            console.log('authentication does not match link owner');
+            return res.status(401).send('unauthorized');
+        }
+
+        await db.query('DELETE FROM links WHERE links.id=$1;', [ id ]);
+        res.sendStatus(204);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+}
+
+export { createShortUrl, findOneUrl, useShortUrl, deleteOneUrl };
