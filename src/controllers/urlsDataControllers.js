@@ -5,24 +5,24 @@ async function listUserUrls(req,res) {
     const { user } = res.locals;
 
     try {
-        const userData = await db.query(`select users.id, users.name, count(visits) as "visitCount"
-                                    from visits 
-                                    join links on visits.link_id=links.id 
-                                    join users on links.user_id=users.id
-                                    where users.id = $1
-                                    group by users.name, users.id
-                                   ;`, [user.id]);
+        const userData = await db.query(`SELECT users.id, users.name, COUNT(visits) AS "visitCount"
+                                        FROM visits
+                                        JOIN links ON visits.link_id=links.id 
+                                        JOIN users ON links.user_id=users.id
+                                        WHERE users.id = $1
+                                        GROUP BY users.name, users.id
+                                    ;`, [user.id]);
 
         if(!userData.rows[0]) {
             console.log('user not found');
             return res.status(404).send('user not found');
         }
 
-        const userUrls = await db.query(`select links.id as id, links.short_url as "shortUrl", links.full_url as "url", count(visits.link_id) as "visitCount"
-                                        from links
-                                        left join visits on links.id=visits.link_id
-                                        where links.user_id = $1
-                                        group by visits.link_id, links.id
+        const userUrls = await db.query(`SELECT links.id AS id, links.short_url AS "shortUrl", links.full_url AS "url", COUNT(visits.link_id) AS "visitCount"
+                                        FROM links
+                                        LEFT JOIN visits ON links.id=visits.link_id
+                                        WHERE links.user_id = $1
+                                        GROUP BY visits.link_id, links.id
                                         ;`, [user.id]);
 
         res.status(200).send({
