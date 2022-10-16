@@ -4,7 +4,7 @@ CREATE DATABASE "shortly";
 
 CREATE TABLE "users" (
 	"id" serial NOT NULL,
-	"name" TEXT NOT NULL UNIQUE,
+	"name" TEXT NOT NULL,
 	"email" TEXT NOT NULL UNIQUE,
 	"password" TEXT NOT NULL,
 	"created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
