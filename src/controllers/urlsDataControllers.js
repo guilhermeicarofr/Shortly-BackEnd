@@ -22,7 +22,7 @@ async function listUserUrls(req,res) {
                                         FROM links
                                         LEFT JOIN visits ON links.id=visits.link_id
                                         WHERE links.user_id = $1
-                                        GROUP BY visits.link_id, links.id
+                                        GROUP BY visits.link_id, links.short_url, links.id, links.full_url
                                         ;`, [user.id]);
 
         res.status(200).send({
@@ -47,7 +47,7 @@ async function listUrlsRanking(req,res) {
                                                     GROUP BY user_id )
                                             AS "userVisits" ON "userVisits".user_id=users.id
                                         LEFT JOIN links ON links.user_id=users.id	
-                                        GROUP BY users.id, "userVisits".count
+                                        GROUP BY users.id, users.name, "userVisits".count
                                         ORDER BY "visitCount" DESC
                                         LIMIT 10
                                         ;`);
