@@ -6,7 +6,7 @@ async function createShortUrl(req,res) {
 
     const { user } = res.locals;
     const { url } = res.locals.valid;
-    const shortUrl = nanoid();
+    const shortUrl = nanoid(8);
 
     await createNewUrl(res, user, url, shortUrl);
 
