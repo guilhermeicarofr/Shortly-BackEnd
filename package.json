@@ -5,7 +5,8 @@
   "description": "an application to shorten and distribute your links ",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon src/index.js",
+    "start": "node ./src/index.js",
+    "devstart": "npx nodemon ./src/index.js",
     "commit": "git add . && git commit -m"
   },
   "repository": {
