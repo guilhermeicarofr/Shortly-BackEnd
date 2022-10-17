@@ -7,7 +7,6 @@ const urlsDataRouter = Router();
 
 urlsDataRouter.get('/ranking', listUrlsRanking);
 
-urlsDataRouter.use(validateAuthToken);
-urlsDataRouter.get('/users/me', listUserUrls);
+urlsDataRouter.get('/users/me', validateAuthToken, listUserUrls);
 
 export { urlsDataRouter };
