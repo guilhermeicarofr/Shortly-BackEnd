@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { db } from '../databases/database.js';
+import { readUserBySession } from '../repositories/usersRepositories.js';
 
 async function validateAuthToken(req,res,next) {
     
@@ -22,11 +22,7 @@ async function validateAuthToken(req,res,next) {
             return res.status(401).send('invalid authentication');
         }
 
-        const userId = await db.query(`SELECT users.id
-                            FROM users
-                            JOIN sessions on users.id=sessions.user_id
-                            WHERE sessions.id=$1
-                            LIMIT 1;`, [ session_id ]);
+        const userId = await readUserBySession(res, session_id);
 
         res.locals.user = { ...userId.rows[0] };
         next();
